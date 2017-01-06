@@ -11,37 +11,52 @@
         android:layout_height="wrap_content"
         >
 
-        <com.devgary.materialcontextmenu.materialcontextmenu.CustomToolbar
+        <!--<com.devgary.materialcontextmenu.materialcontextmenu.CustomToolbar-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="?attr/actionBarSize"-->
+            <!--android:background="?attr/colorPrimary"-->
+            <!--/>-->
+
+
+        <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            />
-
-
-        <android.support.v7.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:layout_marginRight="-6dp"
             >
 
             <com.devgary.materialcontextmenu.materialcontextmenu.SquareFrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
-                android:background="@drawable/circular_ripple"
                 android:clickable="true"
-                android:padding="10dp"
                 >
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_more_vert_black_24dp"
-                    android:tint="#FFFFFF"
+                <View
+                    android:id="@+id/toolbar_top_right_anchor"
+                    android:layout_width="1px"
+                    android:layout_height="1px"
+                    android:visibility="invisible"
+                    android:layout_gravity="top|right"
                     />
+
+                <FrameLayout
+                    android:id="@+id/toolbar_overflow_touch_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/circular_ripple"
+                    android:layout_margin="8dp"
+                    >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_more_vert_black_24dp"
+                        android:tint="#FFFFFF"
+                        />
+
+                </FrameLayout>
 
             </com.devgary.materialcontextmenu.materialcontextmenu.SquareFrameLayout>
 

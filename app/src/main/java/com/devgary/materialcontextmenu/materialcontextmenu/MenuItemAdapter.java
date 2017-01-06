@@ -3,7 +3,9 @@ package com.devgary.materialcontextmenu.materialcontextmenu;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -30,6 +32,8 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
+        final Context context = parent.getContext();
+
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_menu_item, parent, false);
 
         final ViewHolder viewHolder = new ViewHolder(v);
@@ -41,6 +45,28 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
                 if (listener != null){
                     listener.onItemClick(viewHolder.getAdapterPosition());
                 }
+            }
+        });
+
+        viewHolder.layoutTouchContainer.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                Log.v("MotionEvent", String.valueOf(motionEvent.getActionMasked()));
+                switch (motionEvent.getActionMasked()){
+
+                    case MotionEvent.ACTION_DOWN:
+
+                        viewHolder.layoutTouchContainer.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
+                        return true;
+
+                    case MotionEvent.ACTION_OUTSIDE:
+
+                        viewHolder.layoutTouchContainer.setBackgroundColor(ContextCompat.getColor(context, android.R.color.white));
+                        return true;
+                }
+
+                return false;
             }
         });
 
@@ -84,7 +110,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
 
             layoutTouchContainer = itemView.findViewById(R.id.layout_touch_container);
             textView = (TextView)itemView.findViewById(R.id.menu_item_textview);
-            imageView = (ImageView) itemView.findViewById(R.id.menu_tem_imageview);
+            imageView = (ImageView) itemView.findViewById(R.id.menu_item_imageview);
         }
     }
 

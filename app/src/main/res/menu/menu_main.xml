@@ -4,10 +4,12 @@
 
     <item
         android:title="Settings"
+        android:icon="@drawable/ic_refresh_white_24dp"
         app:showAsAction="never"/>
 
     <item
         android:title="Settings"
+        android:icon="@drawable/ic_refresh_white_24dp"
         app:showAsAction="never"/>
 
     <item

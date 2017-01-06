@@ -5,7 +5,9 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -52,11 +54,9 @@ public class MaterialContextMenu extends LinearLayout {
 
         List<MenuItem> dataset = new ArrayList<>();
 
-        dataset.add(new MenuItem("Settings"));
-        dataset.add(new MenuItem("Settings"));
-        dataset.add(new MenuItem("Settings"));
-        dataset.add(new MenuItem("Settings"));
-        dataset.add(new MenuItem("Settings"));
+        dataset.add(new MenuItem("Refresh", R.drawable.ic_refresh_white_24dp));
+        dataset.add(new MenuItem("Subscribe", R.drawable.ic_rss_feed_white_24dp));
+        dataset.add(new MenuItem("Search", R.drawable.ic_search_white_24dp));
 
         adapter = new MenuItemAdapter(dataset);
 
@@ -72,6 +72,15 @@ public class MaterialContextMenu extends LinearLayout {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 //        recyclerView.addItemDecoration(new RecyclerViewTopAndBottomSpacingItemDecoration((int) AndroidUtils.convertDpToPixel(8), (int) AndroidUtils.convertDpToPixel(8)));
         recyclerView.scrollToPosition(0);
+
+        recyclerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                Log.v("MainActivity", "(" + motionEvent.getRawX() + ")");
+                return false;
+            }
+        });
     }
 
     @Override
@@ -192,11 +201,45 @@ public class MaterialContextMenu extends LinearLayout {
     public void hideContextMenu() {
         if (!isContextMenuDismissing) {
             isContextMenuDismissing = true;
-            performDismissAnimation();
+            performDismissAnim();
         }
     }
 
-    private void performDismissAnimation() {
+    private void performDismissAnim(){
+
+        performFadeDismissAnim();
+    }
+
+    private void performFadeDismissAnim(){
+
+        animate()
+                .alpha(0.0f)
+                .setDuration(300)
+                .setListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animator) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animator) {
+                        dismiss();
+                        isContextMenuDismissing = false;
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animator) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animator) {
+
+                    }
+                });
+    }
+
+    private void performCollapseDismissAnim() {
         setPivotX(getWidth() / 2);
         setPivotY(getHeight());
         animate()
